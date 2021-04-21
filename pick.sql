@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 14, 2021 at 09:57 PM
+-- Generation Time: Apr 21, 2021 at 04:59 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -139,6 +139,32 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bank_details`
+--
+
+CREATE TABLE `bank_details` (
+  `employee_id` int(11) NOT NULL,
+  `employee_code` varchar(100) NOT NULL,
+  `full_name` varchar(100) NOT NULL,
+  `bank_name` varchar(100) NOT NULL,
+  `branch_code` int(11) NOT NULL,
+  `bank_account` int(11) NOT NULL,
+  `account_type` varchar(100) NOT NULL,
+  `account_status` enum('active','inactive') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bank_details`
+--
+
+INSERT INTO `bank_details` (`employee_id`, `employee_code`, `full_name`, `bank_name`, `branch_code`, `bank_account`, `account_type`, `account_status`) VALUES
+(6, '2021', 'Khumbulani', 'NedBank', 2020, 89919991, 'Savings', 'active'),
+(7, '91189', 'Robert Gadzai', 'ABSA Bank', 19191, 89101019, 'Savings', 'active'),
+(8, '1999', 'Emily Nkosi', 'First National Bank SA', 29099, 2147483647, 'Cheque', 'active');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `brand`
 --
 
@@ -199,7 +225,9 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`employee_id`, `employee_code`, `full_name`, `phone_no`, `email`, `address`, `dob`, `id_no`, `nationality`, `roles`, `start_date`, `emp_type`, `employee_status`) VALUES
-(14, 91189, 'Robert Gadzai', 843564458, 'gadzairobert@gmail.com', '46 Loveday St, Selby, JHB', '2003-06-18', '9181918111289191', 'Zimbabwean', 'Supervisor', '2021-02-01', 'Contract', 'Active');
+(14, 91189, 'Robert Gadzai', 843564458, 'gadzairobert@gmail.com', '46 Loveday St, Selby, JHB', '2003-06-18', 'cn99110', 'Zimbabwean', 'Supervisor', '2021-02-01', 'Contract', 'Active'),
+(15, 2021, 'Khumbulani', 728911122, 'khumbu@gmail.com', '120 hwu', '2021-04-01', '2020192', 'SA', 'Supervisor', '2021-04-08', 'Contract', 'Active'),
+(16, 1999, 'Emily Nkosi', 1992292929, 'g@gmail.com', '1299 belev', '2021-04-01', '19938210101', 'SA', 'Supervisor', '2021-04-01', 'General', 'Active');
 
 -- --------------------------------------------------------
 
@@ -214,15 +242,6 @@ CREATE TABLE `expense` (
   `expense_status` enum('active','inactive') NOT NULL,
   `expense_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `expense`
---
-
-INSERT INTO `expense` (`expense_id`, `user_id`, `expense_total`, `expense_status`, `expense_date`) VALUES
-(21, 1, 336.00, 'active', '2021-04-14'),
-(22, 1, 36.00, 'active', '2021-04-14'),
-(23, 1, 510572.00, 'active', '2021-04-14');
 
 -- --------------------------------------------------------
 
@@ -240,19 +259,6 @@ CREATE TABLE `expense_items` (
   `unit_price` double(10,2) NOT NULL,
   `net_price` double(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `expense_items`
---
-
-INSERT INTO `expense_items` (`expense_items_id`, `expense_id`, `exp_id`, `expense_item`, `quantity`, `unit`, `unit_price`, `net_price`) VALUES
-(80, 21, 3, 'gloves', 10, 'kg', 12.00, 120.00),
-(81, 21, 4, 'plastic bags', 12, 'kg', 9.00, 108.00),
-(82, 21, 1, 'bond paper', 9, 'kg', 12.00, 108.00),
-(83, 22, 2, '12test', 3, 'kg', 12.00, 36.00),
-(84, 23, 4, 'test1', 1919, 'kg', 188.00, 360772.00),
-(85, 23, 1, 'test2', 9198, 'kg', 12.00, 110376.00),
-(86, 23, 4, 'test3', 1232, 'kg', 32.00, 39424.00);
 
 -- --------------------------------------------------------
 
@@ -296,7 +302,7 @@ CREATE TABLE `inventory_customer` (
 --
 
 INSERT INTO `inventory_customer` (`customer_id`, `inventory_order_name`, `inventory_order_address`, `phone_number`, `email_address`, `customer_status`) VALUES
-(8, 'renewIt', '45 Ellof Street, JHB', 2147483647, 'renewit@gmail.com', 'active');
+(9, 'customer', '9229 hbje', 2147483647, 'test@gmail.com', 'active');
 
 -- --------------------------------------------------------
 
@@ -319,10 +325,7 @@ CREATE TABLE `inventory_order` (
 --
 
 INSERT INTO `inventory_order` (`inventory_order_id`, `user_id`, `inventory_order_total`, `inventory_order_name`, `inventory_order_status`, `inventory_order_created_date`, `invoice_no`) VALUES
-(5, 1, 206.45, 'renewIt', 'active', '2021-04-14', 'IN128'),
-(6, 1, 1048.80, 'renewIt', 'active', '2021-04-14', 'INV122'),
-(7, 1, 21.53, 'renewIt', 'active', '2021-04-14', 'INB922'),
-(8, 1, 1829.88, 'renewIt', 'active', '2021-04-14', 'INV28182');
+(31, 1, 185.15, 'customer', 'active', '2021-04-20', 'INV12');
 
 -- --------------------------------------------------------
 
@@ -351,17 +354,7 @@ CREATE TABLE `inventory_order_product` (
 --
 
 INSERT INTO `inventory_order_product` (`inventory_order_product_id`, `inventory_order_purchase_id`, `inventory_order_id`, `stock_id`, `product_id`, `quantity`, `uom`, `deduct`, `qty_nett`, `price`, `nett_price`, `tax`, `item_date`) VALUES
-(7, 0, 5, 7, 0, 12.00, 'kg', 3.00, 0.00, 12.00, 0.00, 1.15, '2021-04-14'),
-(8, 0, 5, 4, 0, 88.00, '%', 32.00, 59.84, 3.00, 179.52, 1.15, '2021-04-14'),
-(9, 0, 6, 7, 0, 19.00, 'kg', 2.00, 0.00, 12.00, 0.00, 1.15, '2021-04-14'),
-(10, 0, 6, 3, 0, 99.00, 'kg', 23.00, 76.00, 12.00, 912.00, 1.15, '2021-04-14'),
-(11, 0, 7, 7, 0, 121.00, 'kg', 3.00, 0.00, 12.00, 0.00, 1.15, '2021-04-14'),
-(12, 0, 7, 6, 0, 9.00, '%', 9.00, 8.19, 9.00, 73.71, 1.15, '2021-04-14'),
-(13, 0, 7, 4, 0, 12.00, '%', 88.00, 1.44, 13.00, 18.72, 1.15, '2021-04-14'),
-(14, 0, 8, 3, 0, 99.00, 'kg', 33.00, 0.00, 12.00, 0.00, 1.15, '2021-04-14'),
-(15, 0, 8, 7, 0, 12.00, '%', 12.00, 10.56, 88.00, 929.28, 1.15, '2021-04-14'),
-(16, 0, 8, 6, 0, 43.00, '%', 32.00, 29.24, 12.00, 350.88, 1.15, '2021-04-14'),
-(17, 0, 8, 4, 0, 12.00, '%', 19.00, 9.72, 32.00, 311.04, 1.15, '2021-04-14');
+(54, 0, 31, 12, 0, 29.00, 'kg', 22.00, 7.00, 23.00, 161.00, 1.15, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -387,7 +380,7 @@ CREATE TABLE `payrol` (
   `uif` double(10,2) NOT NULL,
   `loan_repay` double(10,2) NOT NULL,
   `net_salary` double(10,2) NOT NULL,
-  `pay_status` enum('Paid','Unpaid') NOT NULL
+  `pay_status` enum('PAID','UNPAID') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -395,7 +388,9 @@ CREATE TABLE `payrol` (
 --
 
 INSERT INTO `payrol` (`pay_id`, `pay_date`, `employee_code`, `full_name`, `address`, `start_date`, `bank_name`, `branch_code`, `bank_account`, `account_type`, `rate_per_hour`, `basic_salary`, `loan_advance`, `over_time`, `uif`, `loan_repay`, `net_salary`, `pay_status`) VALUES
-(32, '2021-04-30', 0, 'Robert Gadzai', '', '0000-00-00', 'Capitec Bank', 19118, 99182999, 'Savings', 12.00, 198229.00, 89.00, 0.00, 88.00, 21.00, 198209.00, 'Unpaid');
+(37, '2021-04-22', 0, 'Robert Gadzai', '', '0000-00-00', '', 0, 0, '', 91.00, 10000.00, 91.00, 0.00, 12.00, 8.00, 10071.00, 'PAID'),
+(38, '2021-04-22', 0, 'Khumbulani', '', '0000-00-00', '', 0, 0, '', 188.00, 1999.00, 89.00, 0.00, 899.00, 12.00, 1177.00, 'PAID'),
+(39, '2021-04-28', 0, 'Emily Nkosi', '', '0000-00-00', '', 0, 0, '', 81.92, 290119.00, 819.00, 0.00, 12.00, 89.00, 290837.00, 'PAID');
 
 -- --------------------------------------------------------
 
@@ -435,8 +430,9 @@ INSERT INTO `product` (`product_id`, `category_id`, `brand_id`, `product_name`, 
 CREATE TABLE `purchase` (
   `inventory_purchase_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `agent_name` varchar(100) NOT NULL,
   `inventory_purchase_total` double(10,2) NOT NULL,
-  `inventory_purchase_status` enum('active','inactive') NOT NULL,
+  `inventory_purchase_status` enum('UNPAID','PAID') NOT NULL,
   `inventory_purchase_created_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -444,10 +440,8 @@ CREATE TABLE `purchase` (
 -- Dumping data for table `purchase`
 --
 
-INSERT INTO `purchase` (`inventory_purchase_id`, `user_id`, `inventory_purchase_total`, `inventory_purchase_status`, `inventory_purchase_created_date`) VALUES
-(46, 1, 1791.72, 'active', '2021-04-14'),
-(47, 1, 0.00, 'active', '2021-04-14'),
-(48, 1, 10625.32, 'active', '2021-04-14');
+INSERT INTO `purchase` (`inventory_purchase_id`, `user_id`, `agent_name`, `inventory_purchase_total`, `inventory_purchase_status`, `inventory_purchase_created_date`) VALUES
+(72, 1, 'agent tesing ', 2093.00, 'PAID', '2021-04-20');
 
 -- --------------------------------------------------------
 
@@ -477,16 +471,29 @@ CREATE TABLE `purchase_items` (
 --
 
 INSERT INTO `purchase_items` (`inventory_order_purchase_id`, `inventory_purchase_id`, `product_id`, `category_id`, `stock_id`, `item_name`, `gross_quantity`, `uom`, `deducted`, `net_quantity`, `unit_price`, `net_price`, `item_date`, `item_status`) VALUES
-(58, 46, 0, 0, 3, '', 129.00, 'kg', 23.00, 0.00, 32.00, 0.00, '2021-04-14', 'active'),
-(59, 46, 0, 0, 5, '', 91.00, 'kg', 3.00, 88.00, 22.00, 1936.00, '2021-04-14', 'active'),
-(60, 46, 0, 0, 7, '', 88.00, 'kg', 8.00, 80.00, 9.00, 720.00, '2021-04-14', 'active'),
-(61, 46, 0, 0, 6, '', 34.00, '%', 33.00, 22.78, 23.00, 523.94, '2021-04-14', 'active'),
-(62, 46, 0, 0, 4, '', 189.00, '%', 21.00, 149.31, 12.00, 1791.72, '2021-04-14', 'active'),
-(63, 47, 0, 0, 7, '', 133.00, '%', 12.00, 0.00, 21.00, 0.00, '2021-04-14', 'active'),
-(64, 48, 0, 0, 3, '', 199.00, 'kg', 12.00, 0.00, 12.00, 0.00, '2021-04-14', 'active'),
-(65, 48, 0, 0, 6, '', 123.00, 'kg', 43.00, 80.00, 32.00, 2560.00, '2021-04-14', 'active'),
-(66, 48, 0, 0, 6, '', 321.00, 'kg', 12.00, 309.00, 23.00, 7107.00, '2021-04-14', 'active'),
-(67, 48, 0, 0, 7, '', 33.00, '%', 12.00, 29.04, 33.00, 958.32, '2021-04-14', 'active');
+(112, 72, 0, 0, 12, '', 100.00, '%', 9.00, 91.00, 23.00, 2093.00, '2021-04-20', 'active');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sale_agent`
+--
+
+CREATE TABLE `sale_agent` (
+  `agent_id` int(11) NOT NULL,
+  `agent_name` varchar(100) NOT NULL,
+  `id_no` varchar(100) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `cell_no` int(11) NOT NULL,
+  `agent_status` enum('active','inactive') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sale_agent`
+--
+
+INSERT INTO `sale_agent` (`agent_id`, `agent_name`, `id_no`, `address`, `cell_no`, `agent_status`) VALUES
+(4, 'agent tesing ', '02929991911', 'test addrss ', 2147483647, 'active');
 
 -- --------------------------------------------------------
 
@@ -506,11 +513,7 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`stock_id`, `item_name`, `stock_qty`, `item_status`) VALUES
-(3, 'mix', 130, 'active'),
-(4, 'steel', 77, 'active'),
-(5, 'mix plastic', 91, 'active'),
-(6, 'stahba', 105, 'active'),
-(7, 'roberttest', 90, 'active');
+(12, 'steel', 71, 'active');
 
 -- --------------------------------------------------------
 
@@ -539,6 +542,12 @@ INSERT INTO `user_details` (`user_id`, `user_email`, `user_password`, `user_name
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bank_details`
+--
+ALTER TABLE `bank_details`
+  ADD PRIMARY KEY (`employee_id`);
 
 --
 -- Indexes for table `brand`
@@ -619,6 +628,12 @@ ALTER TABLE `purchase_items`
   ADD PRIMARY KEY (`inventory_order_purchase_id`);
 
 --
+-- Indexes for table `sale_agent`
+--
+ALTER TABLE `sale_agent`
+  ADD PRIMARY KEY (`agent_id`);
+
+--
 -- Indexes for table `stock`
 --
 ALTER TABLE `stock`
@@ -633,6 +648,12 @@ ALTER TABLE `user_details`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `bank_details`
+--
+ALTER TABLE `bank_details`
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `brand`
@@ -650,19 +671,19 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `employee_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `employee_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `expense`
 --
 ALTER TABLE `expense`
-  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `expense_items`
 --
 ALTER TABLE `expense_items`
-  MODIFY `expense_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `expense_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `exp_list`
@@ -674,25 +695,25 @@ ALTER TABLE `exp_list`
 -- AUTO_INCREMENT for table `inventory_customer`
 --
 ALTER TABLE `inventory_customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `inventory_order`
 --
 ALTER TABLE `inventory_order`
-  MODIFY `inventory_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `inventory_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `inventory_order_product`
 --
 ALTER TABLE `inventory_order_product`
-  MODIFY `inventory_order_product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `inventory_order_product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `payrol`
 --
 ALTER TABLE `payrol`
-  MODIFY `pay_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `pay_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -704,19 +725,25 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `purchase`
 --
 ALTER TABLE `purchase`
-  MODIFY `inventory_purchase_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `inventory_purchase_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `purchase_items`
 --
 ALTER TABLE `purchase_items`
-  MODIFY `inventory_order_purchase_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `inventory_order_purchase_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+
+--
+-- AUTO_INCREMENT for table `sale_agent`
+--
+ALTER TABLE `sale_agent`
+  MODIFY `agent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user_details`
