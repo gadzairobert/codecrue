@@ -1,0 +1,52 @@
+<!-- <html>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#kg").click(function(){ 
+    $("#text").attr("value","kg");
+  });
+});
+$(document).ready(function(){
+  $("#percent").click(function(){
+    $("#text").attr("value","%");
+  });
+});
+</script>
+</head>
+<body>
+<input name="showtype" type="radio" id="kg" value="kg" />Basic Slideshow<br />
+
+<input name="showtype" type="radio" id="percent" value="percent" /> Love Story <br />
+
+<input name="showtype_cost" type="text" id="text" value=""readonly> 
+<p></p>
+</body>
+</html> -->
+
+<HTML>
+    <HEAD>
+      <TITLE>Test Input</TITLE>
+      <SCRIPT LANGUAGE="JavaScript">
+        function testResults (form) {
+        var TestVar1 = form.input[0].checked;
+        var TestVar2 = form.input[1].checked;
+          if (TestVar1 == true) {
+            form.uom.value = "kg";
+          } else if (TestVar2 == true){
+            form.uom.value = "%";
+          } else if (TestVar1 == false && TestVar2 == false) {
+            form.uom.value = "";
+          }
+        }
+  </SCRIPT>
+  </HEAD>
+  <BODY>
+  <FORM NAME="myform" ACTION="" METHOD="POST">Choose a Color: <BR>
+    <input type="radio" name="input" value="kg"  onchange="testResults(this.form)">
+<input type="radio" name="input" value="%" onchange="testResults(this.form)">
+     <input type="text" ID="uom" NAME="selected" value=""></div><p>
+  
+  </FORM>
+  </BODY>
+  </HTML>
